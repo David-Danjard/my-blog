@@ -1,23 +1,23 @@
 package com.david.danjard.blog.model.users;
 
-public class Role {
+import io.quarkus.hibernate.orm.panache.PanacheEntity;
+import io.quarkus.runtime.annotations.RegisterForReflection;
 
-    private long id;
-    private String name;
+import javax.persistence.Column;
+import javax.persistence.Entity;
 
-    public long getId() {
-        return id;
+@Entity
+@RegisterForReflection
+public class Role extends PanacheEntity {
+
+    @Column(unique = true, nullable = false, length = 20)
+    public String name;
+
+    public static Role add(String name) {
+        Role role = new Role();
+        role.name = name.toUpperCase();
+        role.persist();
+        return role;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }
